@@ -1,20 +1,63 @@
 
-;; 去掉换行的箭头
+;; load setting directory
+(add-to-list 'load-path "~/.emacs.d/mine/")
+
+;; require auto-save.el
+(require 'auto-save)
+(auto-save-enable) 
+(setq auto-save-slient t)
+;; doesnot save ## file
+(setq auto-save-default nil)
+
+
+(global-set-key (kbd "C-z") 'undo)
+
+;; redefine keys
+;; unbind org-mode C-c
+(add-hook 'org-mode-hook
+          (lambda()
+            (local-unset-key (kbd "C-c"))))
+
+;; copy selected or copy one line 
+(global-set-key "\C-c"
+(lambda ()
+  (interactive)
+  (if mark-active
+      (kill-ring-save (region-beginning)
+      (region-end))
+    (progn
+     (kill-ring-save (line-beginning-position)
+     (line-end-position))
+     (message "copied line")))))
+
+;; cut selected or cut one line
+(global-set-key "\C-x"
+(lambda ()
+  (interactive)
+  (if mark-active
+      (kill-region (region-beginning)
+      (region-end))
+  (progn
+     (kill-whole-line 1)
+     (message "killed line")))))
+;; paste
+(global-set-key (kbd "C-v") 'yank)
+
+;; cancel line changed arraw
 (global-visual-line-mode 1)
 
-  (menu-bar-mode -1)
-  (global-set-key [f10] 'menu-bar-mode)         ;;打开/关闭菜单
+(menu-bar-mode -1)
+(global-set-key [f10] 'menu-bar-mode)
 
-  (tool-bar-mode -1)
+(tool-bar-mode -1)
 
-  (scroll-bar-mode -1)    ;;滚动条
+(scroll-bar-mode -1)
 
-(setq ring-bell-function 'ignore) ;; 去掉提示音
-
+;; cancel alert bell
+(setq ring-bell-function 'ignore)
 
 
 ;; define open file
-
 (global-set-key (kbd "\e\ei")
 		(lambda () (interactive) (find-file "~/.emacs.d/init.el")))
 (global-set-key (kbd "\e\ew")
@@ -30,7 +73,6 @@
 ;; Custom dired colume
 ;; Hide some colume
 ;; https://emacs.stackexchange.com/questions/35676/customize-direds-display
-(add-to-list 'load-path "~/.emacs.d/mine/")
 (load "custom-dired.el")
 
 
