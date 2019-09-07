@@ -1,4 +1,5 @@
 
+
 ;; load setting directory
 (add-to-list 'load-path "~/.emacs.d/mine/")
 
@@ -31,7 +32,7 @@
      (message "copied line")))))
 
 ;; cut selected or cut one line
-(global-set-key "\C-x"
+(global-set-key "\C-k"
 (lambda ()
   (interactive)
   (if mark-active
@@ -75,13 +76,24 @@
 ;; https://emacs.stackexchange.com/questions/35676/customize-direds-display
 (load "custom-dired.el")
 
+;; Markdown mode
+;; https://jblevins.org/projects/markdown-mode/
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(autoload 'gfm-mode "markdown-mode"
+   "Major mode for editing GitHub Flavored Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (##))))
+ '(package-selected-packages (quote (markdown-mode ##))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
