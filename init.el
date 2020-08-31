@@ -9,6 +9,8 @@
 (setq auto-save-slient t)
 ;; doesnot save ## file
 (setq auto-save-default nil)
+;; 不保存~结尾的备份文件
+(setq make-backup-files nil)
 
 
 (global-set-key (kbd "C-z") 'undo)
